@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: MeritU
+  datasource:
+    url: jdbc:h2:mem:meritu
+    username: sa
+    password: password
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+api:
+  security:
+    token:
+      secret: my-meritu-default-secret
