@@ -57,4 +57,12 @@ public class GlobalExceptionHandler {
                 "Erro interno: " + e.getMessage());
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponseDTO handleIllegalArgumentException(IllegalArgumentException e) {
+        e.printStackTrace();
+        return new ErrorResponseDTO(HttpStatus.BAD_REQUEST.value(),
+                e.getMessage());
+    }
+
 }

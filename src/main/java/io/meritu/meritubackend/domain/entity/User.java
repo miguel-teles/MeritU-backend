@@ -1,9 +1,12 @@
 package io.meritu.meritubackend.domain.entity;
 
+import io.meritu.meritubackend.domain.dto.UserRQDTO;
+import io.meritu.meritubackend.domain.dto.UserRSDTO;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collection;
 import java.util.List;
@@ -21,14 +24,24 @@ public class User implements UserDetails {
     @Transient
     private Role roleTransiente;
     private Integer balance;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Employee employee;
+    private boolean isActive;
 
     public User() {
     }
 
-    public User(String username, String password, Role role) {
+    public User(String username, String password, Role role, Employee employee) {
         this.username = username;
         this.password = password;
         this.roleTransiente = role;
+        this.isActive = true;
+        this.employee = employee;
+        this.balance = 0;
+    }
+
+    public void encryptPassword(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(password);
     }
 
     @PostLoad
@@ -90,5 +103,22 @@ public class User implements UserDetails {
 
     public Integer getBalance() {
         return balance;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public UserRSDTO toDTO() {
+        return new UserRSDTO(id,
+                username,
+                roleTransiente,
+                balance,
+                employee.toDTO(),
+                isActive);
     }
 }

@@ -12,4 +12,5 @@ public class GlobalConfig {
     public TokenService tokenService() {
         return new TokenServiceImpl();
     }
+
 }
