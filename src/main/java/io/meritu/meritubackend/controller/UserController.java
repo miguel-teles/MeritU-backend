@@ -8,10 +8,7 @@ import io.meritu.meritubackend.domain.entity.User;
 import io.meritu.meritubackend.exception.EmployeeNotFoundException;
 import io.meritu.meritubackend.service.user.UserService;
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +29,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UserRSDTO>> getAllUsers() {
+    public ResponseEntity<List<UserRSDTO>> getAll() {
         return ResponseEntity.ok(userService.findAll().stream()
                 .map(User::toDTO)
                 .toList());

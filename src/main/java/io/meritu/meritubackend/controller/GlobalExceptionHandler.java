@@ -2,6 +2,9 @@ package io.meritu.meritubackend.controller;
 
 import io.meritu.meritubackend.domain.dto.ErrorFieldDTO;
 import io.meritu.meritubackend.domain.dto.ErrorResponseDTO;
+import io.meritu.meritubackend.exception.EmployeeNotFoundException;
+import io.meritu.meritubackend.exception.InvalidEmployeeException;
+import io.meritu.meritubackend.exception.TeamNotFoundException;
 import io.meritu.meritubackend.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -56,6 +59,32 @@ public class GlobalExceptionHandler {
         return new ErrorResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 "Erro interno: " + e.getMessage());
     }
+
+    @ExceptionHandler(TeamNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponseDTO handleInvalidEmployeeException(TeamNotFoundException e) {
+        e.printStackTrace();
+        return new ErrorResponseDTO(HttpStatus.BAD_REQUEST.value(),
+                e.getMessage());
+    }
+
+    @ExceptionHandler(InvalidEmployeeException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponseDTO handleInvalidEmployeeException(InvalidEmployeeException e) {
+        e.printStackTrace();
+        return new ErrorResponseDTO(HttpStatus.BAD_REQUEST.value(),
+                e.getMessage());
+    }
+
+    @ExceptionHandler(EmployeeNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponseDTO handleInvalidEmployeeException(EmployeeNotFoundException e) {
+        e.printStackTrace();
+        return new ErrorResponseDTO(HttpStatus.BAD_REQUEST.value(),
+                e.getMessage());
+    }
+
+
 
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

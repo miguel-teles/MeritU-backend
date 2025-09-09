@@ -21,6 +21,10 @@ public class UserValidatorImpl implements UserValidator {
             throw new InvalidUserException("Employee can't be null");
         } else if (user.getEmployee().getId() != null) {
             throw new InvalidUserException("Can't persist User with already created Employee");
+        } else {
+            if (userRepository.findByUsername(user.getUsername()) != null) {
+                throw new InvalidUserException("Username already exists");
+            }
         }
     }
 }
