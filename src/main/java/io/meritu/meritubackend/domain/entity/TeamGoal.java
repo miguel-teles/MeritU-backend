@@ -1,7 +1,8 @@
 package io.meritu.meritubackend.domain.entity;
 
-import io.meritu.meritubackend.domain.dto.GoalRQDTO;
+import io.meritu.meritubackend.domain.dto.IndividualGoalRQDTO;
 import io.meritu.meritubackend.domain.dto.GoalRSDTO;
+import io.meritu.meritubackend.domain.dto.TeamGoalRQDTO;
 import io.meritu.meritubackend.domain.pojo.GoalType;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -25,14 +26,14 @@ public class TeamGoal extends Goal {
     @ManyToOne(fetch = FetchType.LAZY)
     private Team team;
 
-    public TeamGoal(GoalRQDTO goalRQDTO) {
-        super(goalRQDTO);
-        this.amountGoalPoints = goalRQDTO.getAmountGoalPoints();
-        this.rewardTeamPoints = goalRQDTO.getRewardTeamPoints();
-        this.team = new Team(goalRQDTO.getIdGoalOwner());
+    public TeamGoal(TeamGoalRQDTO teamGoalRQDTO) {
+        super(teamGoalRQDTO);
+        this.amountGoalPoints = teamGoalRQDTO.getAmountGoalPoints();
+        this.rewardTeamPoints = teamGoalRQDTO.getRewardTeamPoints();
+        this.team = new Team(teamGoalRQDTO.getIdGoalOwner());
         this.teamMemberGoals = new ArrayList<>();
-        if (goalRQDTO.getTeamMembersGoals()!=null) {
-            for (GoalRQDTO teamMembersGoal : goalRQDTO.getTeamMembersGoals()) {
+        if (teamGoalRQDTO.getTeamMembersGoals()!=null) {
+            for (IndividualGoalRQDTO teamMembersGoal : teamGoalRQDTO.getTeamMembersGoals()) {
                 this.teamMemberGoals.add(new IndividualGoal(teamMembersGoal));
             }
         }
@@ -49,6 +50,7 @@ public class TeamGoal extends Goal {
                 .setPersonalGoal(true)
                 .setRewardCredits(rewardCredits)
                 .setRewardTeamPoints(rewardTeamPoints)
+                .setAmountGoalTeamPoints(amountGoalPoints)
                 .build();
     }
 

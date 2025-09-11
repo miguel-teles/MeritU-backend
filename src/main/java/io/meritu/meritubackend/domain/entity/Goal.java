@@ -1,6 +1,7 @@
 package io.meritu.meritubackend.domain.entity;
 
 import io.meritu.meritubackend.domain.dto.GoalRQDTO;
+import io.meritu.meritubackend.domain.dto.IndividualGoalRQDTO;
 import io.meritu.meritubackend.domain.dto.GoalRSDTO;
 import io.meritu.meritubackend.domain.pojo.GoalType;
 import jakarta.persistence.*;
@@ -35,6 +36,7 @@ public abstract class Goal {
         this.isAchieved = false;
         this.isActive = true;
     }
+
 
     public abstract GoalRSDTO toDTO();
 

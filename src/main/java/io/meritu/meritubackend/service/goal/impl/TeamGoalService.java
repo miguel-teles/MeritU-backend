@@ -3,6 +3,7 @@ package io.meritu.meritubackend.service.goal.impl;
 import io.meritu.meritubackend.domain.entity.Goal;
 import io.meritu.meritubackend.domain.entity.TeamGoal;
 import io.meritu.meritubackend.repo.GoalRepository;
+import io.meritu.meritubackend.repo.TeamGoalRepository;
 import io.meritu.meritubackend.service.goal.GoalService;
 import io.meritu.meritubackend.service.resolver.goal.GoalValidatorResolver;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TeamGoalService implements GoalService<TeamGoal> {
 
-    private final GoalRepository teamGoalRepository;
+    private final TeamGoalRepository teamGoalRepository;
     private final GoalValidatorResolver goalValidatorResolver;
 
     @Override
@@ -26,11 +27,11 @@ public class TeamGoalService implements GoalService<TeamGoal> {
 
     @Override
     public List<TeamGoal> findAll() {
-        return (List<TeamGoal>)(List<?>) teamGoalRepository.findAll();
+        return teamGoalRepository.findAll();
     }
 
     @Override
     public Optional<TeamGoal> findById(Long id) {
-        return (Optional<TeamGoal>)(Optional<?>) teamGoalRepository.findById(id);
+        return teamGoalRepository.findById(id);
     }
 }

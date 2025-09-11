@@ -9,13 +9,8 @@ import java.util.List;
 
 @Getter
 @Setter
-public class GoalRQDTO {
+public class IndividualGoalRQDTO extends GoalRQDTO {
 
-    @NotEmpty
-    protected String name;
-    @NotNull
-    protected Integer rewardCredits;
-    @NotNull
-    protected Long idGoalOwner;
-
+    private Integer rewardTeamPoints;
+    private List<IndividualGoalRQDTO> teamMembersGoals;
 }

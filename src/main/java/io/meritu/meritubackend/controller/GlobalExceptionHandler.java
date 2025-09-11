@@ -2,10 +2,7 @@ package io.meritu.meritubackend.controller;
 
 import io.meritu.meritubackend.domain.dto.ErrorFieldDTO;
 import io.meritu.meritubackend.domain.dto.ErrorResponseDTO;
-import io.meritu.meritubackend.exception.EmployeeNotFoundException;
-import io.meritu.meritubackend.exception.InvalidEmployeeException;
-import io.meritu.meritubackend.exception.TeamNotFoundException;
-import io.meritu.meritubackend.exception.UserNotFoundException;
+import io.meritu.meritubackend.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -84,13 +81,19 @@ public class GlobalExceptionHandler {
                 e.getMessage());
     }
 
-
-
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponseDTO handleIllegalArgumentException(IllegalArgumentException e) {
         e.printStackTrace();
         return new ErrorResponseDTO(HttpStatus.BAD_REQUEST.value(),
+                e.getMessage());
+    }
+
+    @ExceptionHandler(GoalNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ErrorResponseDTO handleGoalNotFound(GoalNotFoundException e) {
+        e.printStackTrace();
+        return new ErrorResponseDTO(HttpStatus.NOT_FOUND.value(),
                 e.getMessage());
     }
 

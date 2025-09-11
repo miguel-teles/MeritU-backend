@@ -1,6 +1,6 @@
 package io.meritu.meritubackend.controller;
 
-import io.meritu.meritubackend.domain.dto.GoalRQDTO;
+import io.meritu.meritubackend.domain.dto.IndividualGoalRQDTO;
 import io.meritu.meritubackend.domain.dto.GoalRSDTO;
 import io.meritu.meritubackend.domain.entity.Goal;
 import io.meritu.meritubackend.domain.entity.IndividualGoal;
@@ -21,16 +21,16 @@ public class IndividualGoalController {
 
     @GetMapping
     public ResponseEntity<List<GoalRSDTO>> getAll() {
-        return ResponseEntity.ok(individualGoalService.findAll().stream().map(Goal::toDTO).toList());
+        return ResponseEntity.ok(individualGoalService.findAll().stream().map(IndividualGoal::toDTO).toList());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<GoalRSDTO> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(individualGoalService.findById(id).map(Goal::toDTO).orElseThrow(()->new GoalNotFoundException(id)));
+        return ResponseEntity.ok(individualGoalService.findById(id).map(IndividualGoal::toDTO).orElseThrow(()->new GoalNotFoundException(id)));
     }
 
     @PostMapping
-    public ResponseEntity<GoalRSDTO> save(@RequestBody @Valid GoalRQDTO goalDTO) {
+    public ResponseEntity<GoalRSDTO> save(@RequestBody @Valid IndividualGoalRQDTO goalDTO) {
         return ResponseEntity.ok(individualGoalService.save(new IndividualGoal(goalDTO)).toDTO());
     }
 }
