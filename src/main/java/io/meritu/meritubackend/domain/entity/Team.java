@@ -25,6 +25,10 @@ public class Team {
     private List<Goal> goals;
     private boolean isActive;
 
+    public Team(Long id) {
+        this.id = id;
+    }
+
     public Team(String name, Employee manager) {
         this.name = name;
         this.isActive = true;
