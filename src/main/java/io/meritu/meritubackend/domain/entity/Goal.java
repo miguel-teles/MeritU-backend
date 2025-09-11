@@ -2,49 +2,41 @@ package io.meritu.meritubackend.domain.entity;
 
 import io.meritu.meritubackend.domain.dto.GoalRQDTO;
 import io.meritu.meritubackend.domain.dto.GoalRSDTO;
+import io.meritu.meritubackend.domain.pojo.GoalType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.util.Optional;
+import java.util.Date;
 
 @Entity
 @Table
 @Getter
 @NoArgsConstructor
-public class Goal {
+@EntityListeners(AuditingEntityListener.class)
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Goal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
-    private Integer points;
-    private boolean isAchieved;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Employee employee;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Team team;
-    private boolean isActive;
+    protected Long id;
+    protected String name;
+    protected Integer rewardCredits;
+    protected boolean isAchieved;
+    protected boolean isActive;
+    @LastModifiedDate
+    protected Date dateChanged;
 
     public Goal(GoalRQDTO goalRQDTO) {
         this.name = goalRQDTO.getName();
-        this.points = goalRQDTO.getPoints();
+        this.rewardCredits = goalRQDTO.getRewardCredits();
         this.isAchieved = false;
         this.isActive = true;
-        if (Optional.ofNullable(goalRQDTO.getIsPersonalGoal()).orElse(Boolean.FALSE)) {
-            this.employee = new Employee(goalRQDTO.getIdGoalOwner());
-        } else {
-            this.team = new Team(goalRQDTO.getIdGoalOwner());
-        }
     }
 
-    public GoalRSDTO toDTO() {
-        return new GoalRSDTO(id,
-                name,
-                points,
-                employee!=null ? employee.getId():team.getId(),
-                team!=null,
-                isAchieved,
-                isActive);
-    }
+    public abstract GoalRSDTO toDTO();
+
+    public abstract GoalType getGoalType();
 }

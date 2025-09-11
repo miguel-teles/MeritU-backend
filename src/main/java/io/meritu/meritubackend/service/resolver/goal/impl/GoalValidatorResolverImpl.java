@@ -23,6 +23,6 @@ public class GoalValidatorResolverImpl implements GoalValidatorResolver {
 
     @Override
     public GoalValidator resolve(Goal goal) {
-        return this.validators.get(goal.getEmployee() != null ? GoalType.PERSONAL : GoalType.TEAM);
+        return this.validators.get(goal.getGoalType());
     }
 }

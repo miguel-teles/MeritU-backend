@@ -22,7 +22,7 @@ public class Team {
     @OneToOne
     private Employee manager;
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Goal> goals;
+    private List<TeamGoal> teamGoals;
     private boolean isActive;
 
     public Team(Long id) {
