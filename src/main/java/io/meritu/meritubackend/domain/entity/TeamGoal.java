@@ -6,6 +6,7 @@ import io.meritu.meritubackend.domain.dto.GoalRSDTO;
 import io.meritu.meritubackend.domain.dto.TeamGoalRQDTO;
 import io.meritu.meritubackend.domain.pojo.GoalType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,7 +25,7 @@ public class TeamGoal extends Goal {
     private List<Goal> teamMemberGoals;
     private Integer amountGoalPoints;
     private Integer rewardTeamPoints;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Team team;
 
     public TeamGoal(Long id) {
@@ -37,11 +38,6 @@ public class TeamGoal extends Goal {
         this.rewardTeamPoints = teamGoalRQDTO.getRewardTeamPoints();
         this.team = new Team(teamGoalRQDTO.getIdGoalOwner());
         this.teamMemberGoals = new ArrayList<>();
-        if (teamGoalRQDTO.getTeamMembersGoals()!=null) {
-            for (IndividualGoalRQDTO teamMembersGoal : teamGoalRQDTO.getTeamMembersGoals()) {
-                this.teamMemberGoals.add(new IndividualGoal(teamMembersGoal));
-            }
-        }
     }
 
     @Override

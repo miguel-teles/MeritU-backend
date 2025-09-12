@@ -1,5 +1,6 @@
 package io.meritu.meritubackend.service.goal.impl;
 
+import io.meritu.meritubackend.domain.entity.Goal;
 import io.meritu.meritubackend.domain.entity.IndividualGoal;
 import io.meritu.meritubackend.repo.GoalRepository;
 import io.meritu.meritubackend.repo.IndividualGoalRepository;
@@ -13,24 +14,24 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class IndividualGoalService implements GoalService<IndividualGoal> {
+public class IndividualGoalService implements GoalService {
 
     private final IndividualGoalRepository goalRepository;
     private final GoalValidatorResolver goalValidatorResolver;
 
     @Override
-    public IndividualGoal save(IndividualGoal goal) {
+    public Goal save(Goal goal) {
         goalValidatorResolver.resolve(goal).validatePersist(goal);
-        return goalRepository.save(goal);
+        return goalRepository.save((IndividualGoal) goal);
     }
 
     @Override
-    public List<IndividualGoal> findAll() {
-        return goalRepository.findAll();
+    public List<Goal> findAll() {
+        return (List<Goal>) (List<?>) goalRepository.findAll();
     }
 
     @Override
-    public Optional<IndividualGoal> findById(Long id) {
-        return goalRepository.findById(id);
+    public Optional<Goal> findById(Long id) {
+        return goalRepository.findById(id).map(goal -> (Goal) goal);
     }
 }

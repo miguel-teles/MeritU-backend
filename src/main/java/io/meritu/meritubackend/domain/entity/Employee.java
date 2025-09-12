@@ -45,4 +45,8 @@ public class Employee {
     public EmployeeRSDTO toDTO() {
         return new EmployeeRSDTO(id, name, surname);
     }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
 }

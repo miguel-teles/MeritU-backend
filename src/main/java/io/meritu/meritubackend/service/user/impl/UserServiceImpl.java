@@ -5,6 +5,7 @@ import io.meritu.meritubackend.repo.UserRepository;
 import io.meritu.meritubackend.service.user.UserService;
 import io.meritu.meritubackend.service.validator.user.UserValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -40,5 +41,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public User getLoggedUser() {
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
+    @Override
+    public void saveAll(List<User> teamMembers) {
+        userRepository.saveAll(teamMembers);
     }
 }

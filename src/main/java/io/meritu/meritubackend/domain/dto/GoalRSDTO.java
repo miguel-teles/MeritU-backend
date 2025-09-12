@@ -95,8 +95,10 @@ public class GoalRSDTO {
             return this;
         }
 
-        public Builder setTeamGoalId(Long teamGoalId) {
-            dto.teamGoalId = teamGoalId;
+        public Builder setTeamGoalId(Goal teamGoal) {
+            if (teamGoal != null) {
+                dto.teamGoalId = teamGoal.getId();
+            }
             return this;
         }
     }

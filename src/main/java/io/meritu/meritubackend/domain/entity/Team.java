@@ -17,7 +17,7 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch =  FetchType.LAZY, mappedBy = "team")
     private List<Employee> employees;
     @OneToOne
     private Employee manager;
@@ -36,8 +36,11 @@ public class Team {
     }
 
     public TeamDTO toDTO() {
-        return new TeamDTO(this.id,
-                this.name,
-                this.manager.getId());
+        return new TeamDTO.Builder()
+                .setId(this.id)
+                .setName(this.name)
+                .setEmployees(this.getEmployees())
+                .setManagerId(this.manager.getId())
+                .build();
     }
 }

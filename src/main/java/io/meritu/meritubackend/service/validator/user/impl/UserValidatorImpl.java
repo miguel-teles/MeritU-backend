@@ -6,6 +6,7 @@ import io.meritu.meritubackend.repo.EmployeeRepository;
 import io.meritu.meritubackend.repo.UserRepository;
 import io.meritu.meritubackend.service.validator.user.UserValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,10 +20,11 @@ public class UserValidatorImpl implements UserValidator {
     public void validatePersist(User user) {
         if (user.getEmployee() == null) {
             throw new InvalidUserException("Employee can't be null");
-        } else if (user.getEmployee().getId() != null) {
+        } else if (user.getEmployee().getId() != null && user.getId() == null) {
             throw new InvalidUserException("Can't persist User with already created Employee");
         } else {
-            if (userRepository.findByUsername(user.getUsername()) != null) {
+            User userByUsername = userRepository.findUserByUsername(user.getUsername());
+            if (userByUsername != null && (userByUsername.getId() == null || !userByUsername.getId().equals(user.getId()))) {
                 throw new InvalidUserException("Username already exists");
             }
         }

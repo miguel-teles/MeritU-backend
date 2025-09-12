@@ -12,4 +12,7 @@ public interface UserService {
     User save(User user);
     List<User> findAll();
 
+    User getLoggedUser();
+
+    void saveAll(List<User> teamMembers);
 }

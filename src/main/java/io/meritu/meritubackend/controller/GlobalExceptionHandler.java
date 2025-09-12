@@ -97,4 +97,12 @@ public class GlobalExceptionHandler {
                 e.getMessage());
     }
 
+    @ExceptionHandler(InvalidOperationGoalException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponseDTO handleInvalidOperationGoalException(InvalidOperationGoalException e) {
+        e.printStackTrace();
+        return new ErrorResponseDTO(HttpStatus.CONFLICT.value(),
+                e.getMessage());
+    }
+
 }

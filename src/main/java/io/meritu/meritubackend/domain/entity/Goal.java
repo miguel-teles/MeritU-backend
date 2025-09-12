@@ -43,4 +43,8 @@ public abstract class Goal {
     public abstract GoalRSDTO toDTO();
 
     public abstract GoalType getGoalType();
+
+    public void complete() {
+        this.isAchieved = true;
+    }
 }

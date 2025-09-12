@@ -121,4 +121,8 @@ public class User implements UserDetails {
                 employee.toDTO(),
                 isActive);
     }
+
+    public void addBalance(Integer rewardCredits) {
+        this.balance += rewardCredits;
+    }
 }

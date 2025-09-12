@@ -1,11 +1,9 @@
 package io.meritu.meritubackend;
 
-import io.meritu.meritubackend.domain.entity.Employee;
-import io.meritu.meritubackend.domain.entity.Role;
-import io.meritu.meritubackend.domain.entity.Team;
-import io.meritu.meritubackend.domain.entity.User;
-import io.meritu.meritubackend.repo.TeamRepository;
-import io.meritu.meritubackend.repo.UserRepository;
+import io.meritu.meritubackend.domain.dto.IndividualGoalRQDTO;
+import io.meritu.meritubackend.domain.dto.TeamGoalRQDTO;
+import io.meritu.meritubackend.domain.entity.*;
+import io.meritu.meritubackend.repo.*;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -18,6 +16,9 @@ public class PopulaBanco {
 
     private final UserRepository userRepository;
     private final TeamRepository teamRepository;
+    private final EmployeeRepository employeeRepository;
+    private final IndividualGoalRepository individualGoalRepository;
+    private final TeamGoalRepository teamGoalRepository;
 
     @PostConstruct
     public void postConstruct() {
@@ -38,6 +39,18 @@ public class PopulaBanco {
 
         Team team = new Team("Team 1", contaMaria.getEmployee());
         teamRepository.save(team);
+
+        contaMiguel.getEmployee().setTeam(team);
+        employeeRepository.save(contaMiguel.getEmployee());
+
+        contaJoao.getEmployee().setTeam(team);
+        employeeRepository.save(contaJoao.getEmployee());
+
+        TeamGoal goal = new TeamGoal(new TeamGoalRQDTO(20, 10, "Team goal", 10, 1l));
+        teamGoalRepository.save(goal);
+
+        IndividualGoal individualGoal = new IndividualGoal(new IndividualGoalRQDTO(20, 1l, "Individual goal", 10, 1l));
+        individualGoalRepository.save(individualGoal);
     }
 
 }
