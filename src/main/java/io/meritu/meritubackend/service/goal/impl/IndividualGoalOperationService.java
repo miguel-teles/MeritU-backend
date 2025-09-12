@@ -7,25 +7,25 @@ import io.meritu.meritubackend.domain.entity.User;
 import io.meritu.meritubackend.exception.EmployeeNotFoundException;
 import io.meritu.meritubackend.exception.GoalNotFoundException;
 import io.meritu.meritubackend.exception.InvalidOperationGoalException;
-import io.meritu.meritubackend.service.employee.EmployeeService;
 import io.meritu.meritubackend.service.goal.GoalOperationService;
 import io.meritu.meritubackend.service.goal.GoalService;
 import io.meritu.meritubackend.service.user.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 public class IndividualGoalOperationService implements GoalOperationService {
 
     private final GoalService goalService;
     private final UserService userService;
+    private final TeamAndIndividualGoalOperationHelper teamAndIndividualGoalOperationHelper;
 
     public IndividualGoalOperationService(@io.meritu.meritubackend.config.annotation.IndividualGoal GoalService goalService,
-                                          UserService userService) {
+                                          UserService userService,
+                                          TeamAndIndividualGoalOperationHelper teamAndIndividualGoalOperationHelper) {
         this.goalService = goalService;
         this.userService = userService;
+        this.teamAndIndividualGoalOperationHelper = teamAndIndividualGoalOperationHelper;
     }
 
     @Override
@@ -38,6 +38,9 @@ public class IndividualGoalOperationService implements GoalOperationService {
         goal.complete();
         giveCreditToEmployee(goal);
         goal = (IndividualGoal) goalService.save(goal);
+        if (goal.getTeamGoal() != null) {
+            teamAndIndividualGoalOperationHelper.completeTeamGoalIfPointsReached(goal.getTeamGoal());
+        }
         return goal;
     }
 

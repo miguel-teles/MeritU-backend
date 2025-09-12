@@ -9,6 +9,7 @@ import io.meritu.meritubackend.service.goal.GoalOperationService;
 import io.meritu.meritubackend.service.goal.GoalService;
 import io.meritu.meritubackend.service.team.TeamService;
 import io.meritu.meritubackend.service.user.UserService;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,15 +17,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TeamGoalOperationService implements GoalOperationService {
+public class TeamGoalOperationServiceImpl implements GoalOperationService {
 
     private final GoalService goalService;
     private final UserService userService;
     private final TeamService teamService;
 
-    public TeamGoalOperationService(@io.meritu.meritubackend.config.annotation.TeamGoal GoalService goalService,
-                                    UserService userService,
-                                    TeamService teamService) {
+    public TeamGoalOperationServiceImpl(@io.meritu.meritubackend.config.annotation.TeamGoal GoalService goalService,
+                                        UserService userService,
+                                        TeamService teamService) {
         this.goalService = goalService;
         this.userService = userService;
         this.teamService = teamService;
