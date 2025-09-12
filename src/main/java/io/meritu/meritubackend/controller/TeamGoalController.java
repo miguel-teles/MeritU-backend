@@ -32,7 +32,8 @@ public class TeamGoalController {
 
     @PostMapping
     public ResponseEntity<GoalRSDTO> save(@RequestBody @Valid TeamGoalRQDTO goalDTO) {
-        return ResponseEntity.ok(teamGoalService.save(new TeamGoal(goalDTO)).toDTO());
+        TeamGoal teamGoal = teamGoalService.save(new TeamGoal(goalDTO));
+        return ResponseEntity.ok(teamGoal.toDTO());
     }
 
 }

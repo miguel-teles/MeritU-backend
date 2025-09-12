@@ -26,6 +26,7 @@ public class IndividualGoal extends Goal {
         super(goalDTO);
         this.employee = new Employee(goalDTO.getIdGoalOwner());
         this.rewardTeamPoints = goalDTO.getRewardTeamPoints();
+        this.teamGoal = new TeamGoal(goalDTO.getTeamGoalId());
     }
 
     @Override
@@ -39,6 +40,7 @@ public class IndividualGoal extends Goal {
                 .setPersonalGoal(true)
                 .setRewardCredits(rewardCredits)
                 .setRewardTeamPoints(rewardTeamPoints)
+                .setTeamGoalId(teamGoal.id)
                 .build();
     }
 

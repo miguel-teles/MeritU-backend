@@ -26,6 +26,7 @@ public class GoalRSDTO {
     private boolean isAchieved;
     private boolean isActive;
     private List<GoalRSDTO> teamMembersGoals;
+    private Long teamGoalId;
 
     public static class Builder {
 
@@ -91,6 +92,11 @@ public class GoalRSDTO {
             for (Goal goal : goals) {
                 dto.teamMembersGoals.add(goal.toDTO());
             }
+            return this;
+        }
+
+        public Builder setTeamGoalId(Long teamGoalId) {
+            dto.teamGoalId = teamGoalId;
             return this;
         }
     }

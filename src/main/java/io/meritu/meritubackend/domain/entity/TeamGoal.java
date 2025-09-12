@@ -1,5 +1,6 @@
 package io.meritu.meritubackend.domain.entity;
 
+import io.meritu.meritubackend.domain.dto.GoalRQDTO;
 import io.meritu.meritubackend.domain.dto.IndividualGoalRQDTO;
 import io.meritu.meritubackend.domain.dto.GoalRSDTO;
 import io.meritu.meritubackend.domain.dto.TeamGoalRQDTO;
@@ -19,12 +20,16 @@ import java.util.List;
 @NoArgsConstructor
 public class TeamGoal extends Goal {
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "teamGoal")
     private List<Goal> teamMemberGoals;
     private Integer amountGoalPoints;
     private Integer rewardTeamPoints;
     @ManyToOne(fetch = FetchType.LAZY)
     private Team team;
+
+    public TeamGoal(Long id) {
+        this.id = id;
+    }
 
     public TeamGoal(TeamGoalRQDTO teamGoalRQDTO) {
         super(teamGoalRQDTO);
@@ -51,6 +56,7 @@ public class TeamGoal extends Goal {
                 .setRewardCredits(rewardCredits)
                 .setRewardTeamPoints(rewardTeamPoints)
                 .setAmountGoalTeamPoints(amountGoalPoints)
+                .setTeamMembersGoals(this.teamMemberGoals)
                 .build();
     }
 

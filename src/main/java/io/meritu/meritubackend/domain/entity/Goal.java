@@ -1,7 +1,6 @@
 package io.meritu.meritubackend.domain.entity;
 
 import io.meritu.meritubackend.domain.dto.GoalRQDTO;
-import io.meritu.meritubackend.domain.dto.IndividualGoalRQDTO;
 import io.meritu.meritubackend.domain.dto.GoalRSDTO;
 import io.meritu.meritubackend.domain.pojo.GoalType;
 import jakarta.persistence.*;
@@ -29,8 +28,11 @@ public abstract class Goal {
     protected boolean isActive;
     @LastModifiedDate
     protected Date dateChanged;
+    @ManyToOne(fetch = FetchType.LAZY)
+    protected Goal teamGoal;
 
     public Goal(GoalRQDTO goalRQDTO) {
+        this.id = goalRQDTO.getId();
         this.name = goalRQDTO.getName();
         this.rewardCredits = goalRQDTO.getRewardCredits();
         this.isAchieved = false;
