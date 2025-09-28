@@ -1,12 +1,8 @@
 package io.meritu.meritubackend.domain.dto;
 
-import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -20,11 +16,13 @@ public class TeamGoalRQDTO extends GoalRQDTO {
                          Integer rewardTeamPoints,
                          String name,
                          Integer rewardCredits,
-                         Long idGoalOwner) {
+                         Long goalOwnerId,
+                         Long teamGoalId) {
         this.amountGoalPoints = amountGoalPoints;
         this.rewardTeamPoints = rewardTeamPoints;
         this.name = name;
         this.rewardCredits = rewardCredits;
-        this.idGoalOwner = idGoalOwner;
+        this.goalOwnerId = goalOwnerId;
+        this.teamGoalId = teamGoalId;
     }
 }

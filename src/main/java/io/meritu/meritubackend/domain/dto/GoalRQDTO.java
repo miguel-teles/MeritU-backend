@@ -15,6 +15,8 @@ public class GoalRQDTO {
     @NotNull
     protected Integer rewardCredits;
     @NotNull
-    protected Long idGoalOwner;
+    protected Long goalOwnerId;
+    protected Integer rewardTeamPoints;
+    protected Long teamGoalId;
 
 }

@@ -10,6 +10,7 @@ import io.meritu.meritubackend.service.team.TeamService;
 import io.meritu.meritubackend.service.validator.employee.EmployeeValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    @Transactional
     public List<Employee> addEmployees(List<Long> employeesIds, Long teamId) {
         Team team = teamService.findById(teamId).orElseThrow(() -> new TeamNotFoundException(teamId));
 

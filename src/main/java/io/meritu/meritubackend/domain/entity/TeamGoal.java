@@ -1,12 +1,9 @@
 package io.meritu.meritubackend.domain.entity;
 
-import io.meritu.meritubackend.domain.dto.GoalRQDTO;
-import io.meritu.meritubackend.domain.dto.IndividualGoalRQDTO;
 import io.meritu.meritubackend.domain.dto.GoalRSDTO;
 import io.meritu.meritubackend.domain.dto.TeamGoalRQDTO;
 import io.meritu.meritubackend.domain.pojo.GoalType;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,7 +33,7 @@ public class TeamGoal extends Goal {
         super(teamGoalRQDTO);
         this.amountGoalPoints = teamGoalRQDTO.getAmountGoalPoints();
         this.rewardTeamPoints = teamGoalRQDTO.getRewardTeamPoints();
-        this.team = new Team(teamGoalRQDTO.getIdGoalOwner());
+        this.team = new Team(teamGoalRQDTO.getGoalOwnerId());
         this.teamMemberGoals = new ArrayList<>();
     }
 

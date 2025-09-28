@@ -5,6 +5,7 @@ import io.meritu.meritubackend.exception.InvalidUserException;
 import io.meritu.meritubackend.repo.EmployeeRepository;
 import io.meritu.meritubackend.repo.UserRepository;
 import io.meritu.meritubackend.service.validator.user.UserValidator;
+import jdk.jshell.spi.ExecutionControl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -28,5 +29,9 @@ public class UserValidatorImpl implements UserValidator {
                 throw new InvalidUserException("Username already exists");
             }
         }
+    }
+
+    @Override
+    public void validateUpdate(User entity) {
     }
 }

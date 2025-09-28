@@ -4,7 +4,6 @@ import io.meritu.meritubackend.domain.dto.TeamDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -20,6 +19,7 @@ public class Team {
     @OneToMany(cascade = CascadeType.ALL, fetch =  FetchType.LAZY, mappedBy = "team")
     private List<Employee> employees;
     @OneToOne
+    @JoinColumn(unique = true)
     private Employee manager;
     @OneToMany(cascade = CascadeType.ALL)
     private List<TeamGoal> teamGoals;

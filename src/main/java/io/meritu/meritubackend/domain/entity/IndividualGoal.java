@@ -1,6 +1,5 @@
 package io.meritu.meritubackend.domain.entity;
 
-import io.meritu.meritubackend.domain.dto.GoalRQDTO;
 import io.meritu.meritubackend.domain.dto.IndividualGoalRQDTO;
 import io.meritu.meritubackend.domain.dto.GoalRSDTO;
 import io.meritu.meritubackend.domain.pojo.GoalType;
@@ -25,7 +24,7 @@ public class IndividualGoal extends Goal {
 
     public IndividualGoal(IndividualGoalRQDTO goalDTO) {
         super(goalDTO);
-        this.employee = new Employee(goalDTO.getIdGoalOwner());
+        this.employee = new Employee(goalDTO.getGoalOwnerId());
         this.rewardTeamPoints = goalDTO.getRewardTeamPoints();
         if (goalDTO.getTeamGoalId() != null) {
             this.teamGoal = new TeamGoal(goalDTO.getTeamGoalId());

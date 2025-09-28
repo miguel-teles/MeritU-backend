@@ -46,7 +46,7 @@ public class PopulaBanco {
         contaJoao.getEmployee().setTeam(team);
         employeeRepository.save(contaJoao.getEmployee());
 
-        TeamGoal goal = new TeamGoal(new TeamGoalRQDTO(20, 10, "Team goal", 10, 1l));
+        TeamGoal goal = new TeamGoal(new TeamGoalRQDTO(20, 10, "Team goal", 10, 1l, null));
         teamGoalRepository.save(goal);
 
         IndividualGoal individualGoal = new IndividualGoal(new IndividualGoalRQDTO(20, 1l, "Individual goal", 10, 1l));
