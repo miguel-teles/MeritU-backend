@@ -51,4 +51,8 @@ public abstract class Goal {
     public void complete() {
         this.isAchieved = true;
     }
+
+    public void setTeamGoal(Goal teamGoal) {
+        this.teamGoal = teamGoal;
+    }
 }

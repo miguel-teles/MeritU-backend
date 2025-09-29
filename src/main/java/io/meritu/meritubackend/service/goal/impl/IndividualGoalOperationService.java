@@ -18,14 +18,14 @@ public class IndividualGoalOperationService implements GoalOperationService {
 
     private final GoalService goalService;
     private final UserService userService;
-    private final TeamAndIndividualGoalOperationHelper teamAndIndividualGoalOperationHelper;
+    private final GoalAsyncOperationHelper goalAsyncOperationHelper;
 
     public IndividualGoalOperationService(@io.meritu.meritubackend.config.annotation.IndividualGoal GoalService goalService,
                                           UserService userService,
-                                          TeamAndIndividualGoalOperationHelper teamAndIndividualGoalOperationHelper) {
+                                          GoalAsyncOperationHelper goalAsyncOperationHelper) {
         this.goalService = goalService;
         this.userService = userService;
-        this.teamAndIndividualGoalOperationHelper = teamAndIndividualGoalOperationHelper;
+        this.goalAsyncOperationHelper = goalAsyncOperationHelper;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class IndividualGoalOperationService implements GoalOperationService {
         giveCreditToEmployee(goal);
         goal = (IndividualGoal) goalService.save(goal);
         if (goal.getTeamGoal() != null) {
-            teamAndIndividualGoalOperationHelper.completeTeamGoalIfPointsReached(goal.getTeamGoal());
+            goalAsyncOperationHelper.completeTeamGoalIfPointsReached(goal.getTeamGoal());
         }
         return goal;
     }
