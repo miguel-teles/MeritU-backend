@@ -31,6 +31,10 @@ public abstract class Goal {
     @ManyToOne(fetch = FetchType.LAZY)
     protected Goal teamGoal;
 
+    public Goal(Long id) {
+        this.id = id;
+    }
+
     public Goal(GoalRQDTO goalRQDTO) {
         this.id = goalRQDTO.getId();
         this.name = goalRQDTO.getName();

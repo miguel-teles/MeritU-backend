@@ -22,6 +22,10 @@ public class IndividualGoal extends Goal {
     private Employee employee;
     private Integer rewardTeamPoints;
 
+    public IndividualGoal(Long id) {
+        super(id);
+    }
+
     public IndividualGoal(IndividualGoalRQDTO goalDTO) {
         super(goalDTO);
         this.employee = new Employee(goalDTO.getGoalOwnerId());

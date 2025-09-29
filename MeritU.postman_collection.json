@@ -1,0 +1,609 @@
+{
+	"info": {
+		"_postman_id": "0fa9de09-8c85-4b6c-8376-e2c521745d81",
+		"name": "MeritU",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38732175"
+	},
+	"item": [
+		{
+			"name": "Employees",
+			"item": [
+				{
+					"name": "LISTAR",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET BY ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SAVE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"teste\",\n    \"password\": \"1234\",\n    \"role\": \"MANAGER\",\n    \"employee\": {\n        \"name\": \"Teste\",\n        \"surname\": \"aaa\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "adiciona employee no time",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"teamId\": \"2\",\n    \"employeesIds\": [\n        3\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/employees/team",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"employees",
+								"team"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Teams",
+			"item": [
+				{
+					"name": "LISTAR",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/teams",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET BY ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ4cXVvdGUtYmFjayIsInN1YiI6Im1pZ3VlbCIsImV4cCI6MTc1NzQ1MzQ0Nn0.bQU-rrs1g8EcXGsRVyaeYY_fASxklgktOY-VkWP00SA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/teams/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"teams",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SAVE",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Time 2\",\n    \"managerId\": 1 /* id do employee do tipo manager */\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/teams",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"teams"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Goals",
+			"item": [
+				{
+					"name": "time",
+					"item": [
+						{
+							"name": "listar goals de time",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/goals/team",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"goals",
+										"team"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "LISTAR",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/goals/team",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"goals",
+												"team"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 28 Sep 2025 01:03:05 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [
+										{
+											"expires": "Invalid Date",
+											"domain": "",
+											"path": ""
+										}
+									],
+									"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"Team goal\",\n        \"rewardCredits\": 10,\n        \"amountGoalTeamPoints\": 20,\n        \"rewardTeamPoints\": 10,\n        \"idGoalOwner\": 1,\n        \"teamMembersGoals\": [\n            {\n                \"id\": 2,\n                \"name\": \"Individual goal\",\n                \"rewardCredits\": 10,\n                \"rewardTeamPoints\": 20,\n                \"idGoalOwner\": 1,\n                \"teamGoalId\": 1,\n                \"active\": true, /* define se o registro está ativo ou não (todos eles são ativos porque não fiz lógica de desativar) */\n                \"achieved\": false, /* define se a goal foi completada ou não */\n                \"personalGoal\": true /* define se a meta é individual ou não */\n            }\n        ],\n        \"active\": true, /* define se o registro está ativo ou não (todos eles são ativos porque não fiz lógica de desativar) */\n        \"achieved\": false, /* define se a goal foi completada ou não */\n        \"personalGoal\": true /* define se a meta é individual ou não */\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "salvar goal de time",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Goal team 2\", /* NOT NULL - nome da goal */\n    \"rewardCredits\": 20, /* NOT NULL - créditos que o employee ganha ao completar esta goal */\n    \"goalOwnerId\": 3, /* NOT NULL - o id do employee */\n    \"amountGoalPoints\": 10, /* NOT NULL - quantidades de pontos de time que são precisos para completar esta meta de time */\n    \"rewardTeamPoints\": 10 /* NULLABLE - quantidade de pontos de time que são ganhas ao completar essa goal (lembrando que metas de time podem ser compostas por outras metas de time) */\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/goals/team",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"goals",
+										"team"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "individual",
+					"item": [
+						{
+							"name": "listar goals individuais",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:8080/goals/individual",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"goals",
+										"individual"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "LISTAR",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "localhost:8080/goals/individual",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"goals",
+												"individual"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json",
+											"description": "",
+											"type": "text"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Sun, 28 Sep 2025 01:00:26 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [
+										{
+											"expires": "Invalid Date",
+											"domain": "",
+											"path": ""
+										}
+									],
+									"body": "[\n    {\n        \"id\": 2,\n        \"name\": \"Individual goal\",\n        \"rewardCredits\": 10,\n        \"rewardTeamPoints\": 20,\n        \"idGoalOwner\": 1,\n        \"teamGoalId\": 1,\n        \"active\": true, /* define se o registro está ativo ou não (todos eles são ativos porque não fiz lógica de desativar) */\n        \"achieved\": false, /* define se a goal foi completada ou não */\n        \"personalGoal\": true /* define se a goal é individual ou não */\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "salvar goal individual",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Goal individual\", /* NOT NULL - nome da goal */\n    \"rewardCredits\": 10, /* NOT NULL - créditos que o employee ganha ao completar esta goal */\n    \"goalOwnerId\": 3, /* NOT NULL - o id do employee */\n    \"amountGoalPoints\": 10, /* NOT NULL - quantidades de pontos de time que são precisos para completar esta meta de time */\n    \"rewardTeamPoints\": 10, /* PODE SER NULO SE ESSA META NÃO COMPOR UMA META E TIME - quantidade de pontos de time que são ganhas ao completar essa goal  */\n    \"teamGoalId\": 3 /* NULLABLE - id da meta de time caso esta meta individual seja parte de uma meta de time */\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:8080/goals/individual",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"goals",
+										"individual"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "GoalOperation",
+			"item": [
+				{
+					"name": "completar goal individual",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/goals/individual/complete/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"goals",
+								"individual",
+								"complete",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "completar goal de time",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/goals/team/complete/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"goals",
+								"team",
+								"complete",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();",
+							"pm.collectionVariables.set(\"token\", response.token);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"miguel\",\n    \"password\": \"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/login",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": ""
+		}
+	]
+}
