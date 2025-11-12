@@ -5,6 +5,7 @@ import io.meritu.meritubackend.domain.dto.UserRSDTO;
 import io.meritu.meritubackend.domain.entity.Employee;
 import io.meritu.meritubackend.domain.entity.Role;
 import io.meritu.meritubackend.domain.entity.User;
+import io.meritu.meritubackend.domain.entity.UserRole;
 import io.meritu.meritubackend.exception.EmployeeNotFoundException;
 import io.meritu.meritubackend.service.user.UserService;
 import jakarta.validation.Valid;
@@ -39,7 +40,7 @@ public class UserController {
     public ResponseEntity<UserRSDTO> save(@RequestBody @Valid UserRQDTO userRQDTO) {
         return ResponseEntity.ok(userService.save(new User(userRQDTO.getUsername(),
                 userRQDTO.getPassword(),
-                Role.fromName(userRQDTO.getRole()),
+                UserRole.fromName(userRQDTO.getRole()),
                 new Employee(userRQDTO.getEmployee()))).toDTO());
     }
 

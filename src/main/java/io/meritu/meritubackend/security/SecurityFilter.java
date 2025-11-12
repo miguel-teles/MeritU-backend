@@ -1,5 +1,6 @@
 package io.meritu.meritubackend.security;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.google.gson.Gson;
 import io.meritu.meritubackend.domain.dto.ErrorResponseDTO;
@@ -36,6 +37,8 @@ public class SecurityFilter extends OncePerRequestFilter {
             } catch (TokenExpiredException ex) {
                 trataErroTokenExpirado(response);
                 return;
+            } catch (JWTVerificationException ex) {
+                trataErroTokenInvalido(response, ex);
             }
         }
         filterChain.doFilter(request, response);
@@ -52,6 +55,12 @@ public class SecurityFilter extends OncePerRequestFilter {
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType("application/json");
         response.getWriter().write(gson.toJson(new ErrorResponseDTO(HttpStatus.UNAUTHORIZED.value(), "Login expirado, favor logar novamente")));
+    }
+
+    private void trataErroTokenInvalido(HttpServletResponse response, JWTVerificationException ex) throws IOException {
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setContentType("application/json");
+        response.getWriter().write(gson.toJson(new ErrorResponseDTO(HttpStatus.UNAUTHORIZED.value(), ex.getMessage())));
     }
 
     private String pegaTokenDaRequisicao(HttpServletRequest request) {

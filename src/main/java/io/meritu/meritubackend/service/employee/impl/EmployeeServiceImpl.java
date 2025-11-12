@@ -3,6 +3,7 @@ package io.meritu.meritubackend.service.employee.impl;
 import io.meritu.meritubackend.domain.entity.Employee;
 import io.meritu.meritubackend.domain.entity.Team;
 import io.meritu.meritubackend.exception.EmployeeNotFoundException;
+import io.meritu.meritubackend.exception.InvalidOperationTeamException;
 import io.meritu.meritubackend.exception.TeamNotFoundException;
 import io.meritu.meritubackend.repo.EmployeeRepository;
 import io.meritu.meritubackend.service.employee.EmployeeService;
@@ -52,5 +53,10 @@ public class EmployeeServiceImpl implements EmployeeService {
             employees.add(employee);
         }
         return employees;
+    }
+
+    @Override
+    public Employee save(Employee employee) {
+        return employeeRepository.save(employee);
     }
 }

@@ -24,16 +24,16 @@ public class PopulaBanco {
     public void postConstruct() {
         User contaMiguel = new User("miguel",
                 new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder().encode("1234"),
-                Role.EMPLOYEE,
-                new Employee("Miguel", "Teles", true));
+                UserRole.COMMON,
+                new Employee("Miguel", "Teles", true, Role.EMPLOYEE));
         User contaJoao = new User("joao",
                 new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder().encode("1234"),
-                Role.EMPLOYEE,
-                new Employee("João", "Gomes", true));
+                UserRole.COMMON,
+                new Employee("João", "Gomes", true, Role.EMPLOYEE));
         User contaMaria = new User("maria",
                 new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder().encode("1234"),
-                Role.MANAGER,
-                new Employee("Maria", "Gracieli", true));
+                UserRole.COMMON,
+                new Employee("Maria", "Gracieli", true, Role.MANAGER));
 
         userRepository.saveAll(List.of(contaMiguel, contaJoao, contaMaria));
 

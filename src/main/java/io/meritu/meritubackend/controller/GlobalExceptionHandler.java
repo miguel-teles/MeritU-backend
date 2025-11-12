@@ -105,4 +105,11 @@ public class GlobalExceptionHandler {
                 e.getMessage());
     }
 
+    @ExceptionHandler(AuthException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorResponseDTO handleAuthException(AuthException e) {
+        return new ErrorResponseDTO(HttpStatus.UNAUTHORIZED.value(),
+                e.getMessage());
+    }
+
 }

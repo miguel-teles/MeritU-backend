@@ -1,15 +1,17 @@
 package io.meritu.meritubackend.service.goal.impl;
 
-import io.meritu.meritubackend.domain.entity.*;
+import io.meritu.meritubackend.domain.entity.Employee;
+import io.meritu.meritubackend.domain.entity.Goal;
+import io.meritu.meritubackend.domain.entity.Team;
+import io.meritu.meritubackend.domain.entity.TeamGoal;
 import io.meritu.meritubackend.exception.EmployeeNotFoundException;
 import io.meritu.meritubackend.exception.GoalNotFoundException;
 import io.meritu.meritubackend.exception.InvalidOperationGoalException;
 import io.meritu.meritubackend.exception.TeamNotFoundException;
+import io.meritu.meritubackend.repo.EmployeeRepository;
 import io.meritu.meritubackend.service.goal.GoalOperationService;
 import io.meritu.meritubackend.service.goal.GoalService;
 import io.meritu.meritubackend.service.team.TeamService;
-import io.meritu.meritubackend.service.user.UserService;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,14 +22,14 @@ import java.util.List;
 public class TeamGoalOperationServiceImpl implements GoalOperationService {
 
     private final GoalService goalService;
-    private final UserService userService;
+    private final EmployeeRepository employeeRepository;
     private final TeamService teamService;
 
     public TeamGoalOperationServiceImpl(@io.meritu.meritubackend.config.annotation.TeamGoal GoalService goalService,
-                                        UserService userService,
+                                        EmployeeRepository employeeRepository,
                                         TeamService teamService) {
         this.goalService = goalService;
-        this.userService = userService;
+        this.employeeRepository = employeeRepository;
         this.teamService = teamService;
     }
 
@@ -48,17 +50,17 @@ public class TeamGoalOperationServiceImpl implements GoalOperationService {
         Team team = teamService.findById(goal.getTeam().getId())
                 .orElseThrow(() -> new TeamNotFoundException(goal.getTeam().getId()));
 
-        List<User> teamMembers = new ArrayList<>();
+        List<Employee> teamMembers = new ArrayList<>();
         for (Employee employee : new ArrayList<>(team.getEmployees())) {
             teamMembers.add(giveCreditToTeamMember(goal, employee));
         }
-        userService.saveAll(teamMembers);
+        employeeRepository.saveAll(teamMembers);
     }
 
     @Transactional
-    protected User giveCreditToTeamMember(TeamGoal goal, Employee employee) {
-        User goalUser = userService.findByEmployeeId(employee.getId()).orElseThrow(() -> new EmployeeNotFoundException(employee.getId()));
-        goalUser.addBalance(goal.getRewardCredits());
-        return goalUser;
+    protected Employee giveCreditToTeamMember(TeamGoal goal, Employee employee) {
+        Employee managedEmployee = employeeRepository.findById(employee.getId()).orElseThrow(() -> new EmployeeNotFoundException(employee.getId()));
+        managedEmployee.addBalance(goal.getRewardCredits());
+        return employee;
     }
 }

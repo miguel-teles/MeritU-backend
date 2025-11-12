@@ -2,6 +2,7 @@ package io.meritu.meritubackend.service.login.impl;
 
 import io.meritu.meritubackend.domain.dto.LoginRQDTO;
 import io.meritu.meritubackend.domain.dto.LoginRSDTO;
+import io.meritu.meritubackend.domain.dto.UserRSDTO;
 import io.meritu.meritubackend.domain.entity.User;
 import io.meritu.meritubackend.exception.UserNotFoundException;
 import io.meritu.meritubackend.repo.UserRepository;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,6 +28,11 @@ public class LoginServiceImpl implements LoginService {
         UsernamePasswordAuthenticationToken usernamePassword = new UsernamePasswordAuthenticationToken(loginRQDTO.getUsername(), loginRQDTO.getPassword());
         Authentication authenticate = this.authenticationManager.authenticate(usernamePassword);
         return tokenService.gerarToken((User) authenticate.getPrincipal());
+    }
+
+    @Override
+    public UserRSDTO getUsuarioLogado() {
+        return ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).toDTO();
     }
 
     private void validaExistenciaUsuario(LoginRQDTO loginRQDTO) {

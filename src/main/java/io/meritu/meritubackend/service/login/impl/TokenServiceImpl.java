@@ -7,6 +7,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import io.meritu.meritubackend.domain.dto.LoginRSDTO;
 import io.meritu.meritubackend.domain.entity.User;
+import io.meritu.meritubackend.exception.AuthException;
 import io.meritu.meritubackend.service.login.TokenService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +32,8 @@ public class TokenServiceImpl implements TokenService {
                     .withSubject(user.getUsername())
                     .withExpiresAt(definirExpiracaoToken(EXPIRES_IN_SECONDS))
                     .sign(algorithm),
-                    EXPIRES_IN_SECONDS);
+                    EXPIRES_IN_SECONDS,
+                    user.toDTO());
         } catch (JWTCreationException ex) {
             throw new RuntimeException("Erro ao criar token", ex); //dps melhorar essa exception
         }
@@ -43,17 +45,11 @@ public class TokenServiceImpl implements TokenService {
 
     @Override
     public String validarToken(String token) {
-        try {
-            return JWT.require(algorithm)
-                    .withIssuer("xquote-back")
-                    .build()
-                    .verify(token)
-                    .getSubject();
-        } catch (TokenExpiredException ex) {
-            throw ex;
-        } catch (JWTVerificationException ex) {
-            return "";
-        }
+        return JWT.require(algorithm)
+                .withIssuer("xquote-back")
+                .build()
+                .verify(token)
+                .getSubject();
     }
 
     @PostConstruct

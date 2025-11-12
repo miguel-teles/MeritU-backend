@@ -7,6 +7,7 @@ import io.meritu.meritubackend.domain.entity.User;
 import io.meritu.meritubackend.exception.EmployeeNotFoundException;
 import io.meritu.meritubackend.exception.GoalNotFoundException;
 import io.meritu.meritubackend.exception.InvalidOperationGoalException;
+import io.meritu.meritubackend.service.employee.EmployeeService;
 import io.meritu.meritubackend.service.goal.GoalOperationService;
 import io.meritu.meritubackend.service.goal.GoalService;
 import io.meritu.meritubackend.service.user.UserService;
@@ -17,14 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class IndividualGoalOperationService implements GoalOperationService {
 
     private final GoalService goalService;
-    private final UserService userService;
+    private final EmployeeService employeeService;
     private final GoalAsyncOperationHelper goalAsyncOperationHelper;
 
     public IndividualGoalOperationService(@io.meritu.meritubackend.config.annotation.IndividualGoal GoalService goalService,
-                                          UserService userService,
+                                          EmployeeService employeeService,
                                           GoalAsyncOperationHelper goalAsyncOperationHelper) {
         this.goalService = goalService;
-        this.userService = userService;
+        this.employeeService = employeeService;
         this.goalAsyncOperationHelper = goalAsyncOperationHelper;
     }
 
@@ -46,9 +47,8 @@ public class IndividualGoalOperationService implements GoalOperationService {
 
     @Transactional
     protected void giveCreditToEmployee(IndividualGoal goal) {
-        Employee employee = goal.getEmployee();
-        User goalUser = userService.findByEmployeeId(employee.getId()).orElseThrow(() -> new EmployeeNotFoundException(employee.getId()));
-        goalUser.addBalance(goal.getRewardCredits());
-        userService.save(goalUser);
+        Employee goalEmployee = employeeService.findById(goal.getEmployee().getId()).orElseThrow(() -> new EmployeeNotFoundException(goal.getEmployee().getId()));
+        goalEmployee.addBalance(goal.getRewardCredits());
+        employeeService.save(goalEmployee);
     }
 }

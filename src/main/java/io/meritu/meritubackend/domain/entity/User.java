@@ -1,6 +1,5 @@
 package io.meritu.meritubackend.domain.entity;
 
-import io.meritu.meritubackend.domain.dto.UserRQDTO;
 import io.meritu.meritubackend.domain.dto.UserRSDTO;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,10 +19,9 @@ public class User implements UserDetails {
     private Long id;
     private String username;
     private String password;
-    private Integer role;
+    private Integer userRole;
     @Transient
-    private Role roleTransiente;
-    private Integer balance;
+    private UserRole userRoleTransiente;
     @OneToOne(cascade = CascadeType.ALL)
     private Employee employee;
     private boolean isActive;
@@ -31,13 +29,12 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String password, Role role, Employee employee) {
+    public User(String username, String password, UserRole userRole, Employee employee) {
         this.username = username;
         this.password = password;
-        this.roleTransiente = role;
+        this.userRoleTransiente = userRole;
         this.isActive = true;
         this.employee = employee;
-        this.balance = 0;
     }
 
     public void encryptPassword(PasswordEncoder passwordEncoder) {
@@ -46,21 +43,21 @@ public class User implements UserDetails {
 
     @PostLoad
     void postLoad() {
-        if (role != null) {
-            this.roleTransiente = Role.fromValue(role);
+        if (userRole != null) {
+            this.userRoleTransiente = UserRole.fromValue(userRole);
         }
     }
 
     @PrePersist
     void prePersist() {
-        if (roleTransiente != null) {
-            this.role = roleTransiente.getValue();
+        if (userRoleTransiente != null) {
+            this.userRole = userRoleTransiente.getValue();
         }
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(roleTransiente.name()));
+        return List.of(new SimpleGrantedAuthority(userRoleTransiente.name()));
     }
 
     @Override
@@ -98,11 +95,7 @@ public class User implements UserDetails {
     }
 
     public Integer getRoleEnum() {
-        return role;
-    }
-
-    public Integer getBalance() {
-        return balance;
+        return userRole;
     }
 
     public Employee getEmployee() {
@@ -116,13 +109,8 @@ public class User implements UserDetails {
     public UserRSDTO toDTO() {
         return new UserRSDTO(id,
                 username,
-                roleTransiente,
-                balance,
+                userRoleTransiente,
                 employee.toDTO(),
                 isActive);
-    }
-
-    public void addBalance(Integer rewardCredits) {
-        this.balance += rewardCredits;
     }
 }

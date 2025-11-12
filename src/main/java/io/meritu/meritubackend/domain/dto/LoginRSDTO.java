@@ -12,4 +12,5 @@ import lombok.Setter;
 public class LoginRSDTO {
     private String token;
     private Integer expiresIn;
+    private UserRSDTO user;
 }
