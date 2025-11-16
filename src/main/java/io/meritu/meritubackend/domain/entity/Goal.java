@@ -27,7 +27,7 @@ public abstract class Goal {
     protected boolean isAchieved;
     protected boolean isActive;
     @LastModifiedDate
-    protected Date dateChanged;
+    protected Date updateDate;
     @ManyToOne(fetch = FetchType.LAZY)
     protected Goal teamGoal;
 

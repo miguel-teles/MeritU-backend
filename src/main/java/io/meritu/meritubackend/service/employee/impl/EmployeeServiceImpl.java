@@ -3,13 +3,13 @@ package io.meritu.meritubackend.service.employee.impl;
 import io.meritu.meritubackend.domain.entity.Employee;
 import io.meritu.meritubackend.domain.entity.Team;
 import io.meritu.meritubackend.exception.EmployeeNotFoundException;
-import io.meritu.meritubackend.exception.InvalidOperationTeamException;
 import io.meritu.meritubackend.exception.TeamNotFoundException;
 import io.meritu.meritubackend.repo.EmployeeRepository;
 import io.meritu.meritubackend.service.employee.EmployeeService;
 import io.meritu.meritubackend.service.team.TeamService;
 import io.meritu.meritubackend.service.validator.employee.EmployeeValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,8 +26,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final TeamService teamService;
 
     @Override
-    public List<Employee> getEmployees() {
-        return employeeRepository.findAll();
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAllWithGoals();
+    }
+
+    @Override
+    public List<Employee> getBestPerformanceEmployees(Integer limit) {
+        return employeeRepository.findTopByCompletedGoals(limit);
     }
 
     @Override
@@ -38,7 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Optional<Employee> findById(Long id) {
-        return employeeRepository.findById(id);
+        return employeeRepository.findByIdWithGoals(id);
     }
 
     @Override

@@ -22,7 +22,7 @@ public class User implements UserDetails {
     private Integer userRole;
     @Transient
     private UserRole userRoleTransiente;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     private Employee employee;
     private boolean isActive;
 

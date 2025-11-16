@@ -42,7 +42,7 @@ public class GoalAsyncOperationHelper {
                 pointsReached += individualGoal.getRewardTeamPoints();
             }
         }
-        Integer amountGoalPoints = goal.getAmountGoalPoints();
+        Integer amountGoalPoints = goal.getTargetAmountGoalPoints();
 
         return amountGoalPoints >= pointsReached;
     }

@@ -6,6 +6,7 @@ import io.meritu.meritubackend.domain.entity.Employee;
 import io.meritu.meritubackend.domain.entity.User;
 import io.meritu.meritubackend.domain.entity.UserRole;
 import io.meritu.meritubackend.exception.EmployeeNotFoundException;
+import io.meritu.meritubackend.exception.UserNotFoundException;
 import io.meritu.meritubackend.service.user.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,7 +30,7 @@ public class UserController {
     public ResponseEntity<UserRSDTO> getUser(@PathVariable("id") Long id) {
         return ResponseEntity.ok(userService.findById(id)
                 .map(User::toDTO)
-                .orElseThrow(() -> new EmployeeNotFoundException(id)));
+                .orElseThrow(() -> new UserNotFoundException(id)));
     }
 
     @GetMapping

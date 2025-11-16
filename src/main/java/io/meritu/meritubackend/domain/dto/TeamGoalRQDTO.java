@@ -9,16 +9,16 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TeamGoalRQDTO extends GoalRQDTO {
 
-    private Integer amountGoalPoints;
+    private Integer targetAmountGoalPoints;
     private Integer rewardTeamPoints;
 
-    public TeamGoalRQDTO(Integer amountGoalPoints,
+    public TeamGoalRQDTO(Integer targetAmountGoalPoints,
                          Integer rewardTeamPoints,
                          String name,
                          Integer rewardCredits,
                          Long goalOwnerId,
                          Long teamGoalId) {
-        this.amountGoalPoints = amountGoalPoints;
+        this.targetAmountGoalPoints = targetAmountGoalPoints;
         this.rewardTeamPoints = rewardTeamPoints;
         this.name = name;
         this.rewardCredits = rewardCredits;

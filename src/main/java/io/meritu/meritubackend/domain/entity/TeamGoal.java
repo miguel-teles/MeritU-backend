@@ -20,7 +20,7 @@ public class TeamGoal extends Goal {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "teamGoal")
     private List<Goal> teamMemberGoals;
-    private Integer amountGoalPoints;
+    private Integer targetAmountGoalPoints;
     private Integer rewardTeamPoints;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Team team;
@@ -31,7 +31,7 @@ public class TeamGoal extends Goal {
 
     public TeamGoal(TeamGoalRQDTO teamGoalRQDTO) {
         super(teamGoalRQDTO);
-        this.amountGoalPoints = teamGoalRQDTO.getAmountGoalPoints();
+        this.targetAmountGoalPoints = teamGoalRQDTO.getTargetAmountGoalPoints();
         this.rewardTeamPoints = teamGoalRQDTO.getRewardTeamPoints();
         this.team = new Team(teamGoalRQDTO.getGoalOwnerId());
         this.teamMemberGoals = new ArrayList<>();
@@ -48,7 +48,7 @@ public class TeamGoal extends Goal {
                 .setPersonalGoal(true)
                 .setRewardCredits(rewardCredits)
                 .setRewardTeamPoints(rewardTeamPoints)
-                .setAmountGoalTeamPoints(amountGoalPoints)
+                .setAmountGoalTeamPoints(targetAmountGoalPoints)
                 .setTeamMembersGoals(this.teamMemberGoals)
                 .build();
     }

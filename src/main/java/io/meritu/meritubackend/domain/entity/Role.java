@@ -6,13 +6,15 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public enum Role {
-    EMPLOYEE(1),
-    MANAGER(2);
+    EMPLOYEE(1, "Colaborador"), //TODO: depois mudar para aceitar em ingles as coisas
+    MANAGER(2, "Gerente");
 
     private int value;
+    private String label;
 
-    Role(int value) {
+    Role(int value, String label) {
         this.value = value;
+        this.label = label;
     }
 
     public static Role fromName(String roleName) {
@@ -26,6 +28,10 @@ public enum Role {
 
     public int getValue() {
         return value;
+    }
+
+    public String getLabel() {
+        return label;
     }
 
     public static Role fromValue(int value) {

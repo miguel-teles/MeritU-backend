@@ -21,7 +21,7 @@ public class Team {
     @OneToOne
     @JoinColumn(unique = true)
     private Employee manager;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "team")
     private List<TeamGoal> teamGoals;
     private boolean isActive;
 
@@ -42,5 +42,9 @@ public class Team {
                 .setEmployees(this.getEmployees())
                 .setManagerId(this.manager.getId())
                 .build();
+    }
+
+    public void setManager(Employee manager) {
+        this.manager = manager;
     }
 }

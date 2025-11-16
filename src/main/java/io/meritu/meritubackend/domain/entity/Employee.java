@@ -4,6 +4,7 @@ import io.meritu.meritubackend.domain.dto.EmployeeRQDTO;
 import io.meritu.meritubackend.domain.dto.EmployeeRSDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.Hibernate;
 
 import java.util.List;
 
@@ -21,11 +22,11 @@ public class Employee {
     private Integer employeeRole;
     @Transient
     private Role employeeRoleTransiente;
-    private Integer balance;
+    private Integer balance=0;
     @ManyToOne(cascade = CascadeType.ALL)
     private Team team;
-    @OneToMany(cascade = CascadeType.ALL) //, mappedBy = "employee"
-    private List<Goal> goals;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+    private List<IndividualGoal> individualGoals;
     private boolean isActive;
 
     public Employee() {
@@ -43,20 +44,50 @@ public class Employee {
 
     public Employee(String name,
                     String surname,
+                    String email,
                     boolean isActive,
                     Role employeeRole) {
         this.name = name;
         this.surname = surname;
+        this.email = email;
         this.isActive = isActive;
         this.employeeRole = employeeRole.getValue();
     }
 
     public EmployeeRSDTO toDTO() {
-        return new EmployeeRSDTO(id, name, surname);
+        if (employeeRoleTransiente == null) {
+            employeeRoleTransiente = Role.fromValue(employeeRole);
+        }
+
+        Integer completedGoals = 0;
+        Integer activeGoals = 0;
+        if (Hibernate.isInitialized(individualGoals)) {
+            for (IndividualGoal individualGoal : individualGoals) {
+                if (individualGoal.isAchieved) {
+                    completedGoals++;
+                } else {
+                    activeGoals++;
+                }
+            }
+        }
+
+
+        return new EmployeeRSDTO(id,
+                name,
+                surname,
+                email,
+                employeeRoleTransiente.getLabel(),
+                balance,
+                activeGoals,
+                completedGoals);
     }
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    public void setIndividualGoals(List<IndividualGoal> goals) {
+        this.individualGoals = goals;
     }
 
     public void addBalance(Integer rewardCredits) {
