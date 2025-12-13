@@ -1,7 +1,6 @@
 package io.meritu.meritubackend.domain.dto;
 
-import io.meritu.meritubackend.domain.entity.Role;
-import io.meritu.meritubackend.domain.entity.UserRole;
+import io.meritu.meritubackend.domain.entity.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -2,6 +2,7 @@ package io.meritu.meritubackend.domain.entity;
 
 import io.meritu.meritubackend.domain.dto.GoalRSDTO;
 import io.meritu.meritubackend.domain.dto.TeamGoalRQDTO;
+import io.meritu.meritubackend.domain.entity.enums.GoalStatus;
 import io.meritu.meritubackend.domain.pojo.GoalType;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -20,8 +21,6 @@ public class TeamGoal extends Goal {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "teamGoal")
     private List<Goal> teamMemberGoals;
-    private Integer targetAmountGoalPoints;
-    private Integer rewardTeamPoints;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private Team team;
 
@@ -31,25 +30,43 @@ public class TeamGoal extends Goal {
 
     public TeamGoal(TeamGoalRQDTO teamGoalRQDTO) {
         super(teamGoalRQDTO);
-        this.targetAmountGoalPoints = teamGoalRQDTO.getTargetAmountGoalPoints();
-        this.rewardTeamPoints = teamGoalRQDTO.getRewardTeamPoints();
         this.team = new Team(teamGoalRQDTO.getGoalOwnerId());
         this.teamMemberGoals = new ArrayList<>();
+        this.description = teamGoalRQDTO.getDescription();
+        this.deadline = teamGoalRQDTO.getDeadline();
+        this.status = GoalStatus.ACTIVE;
     }
 
     @Override
     public GoalRSDTO toDTO() {
-        return new GoalRSDTO.Builder()
-                .setId(id)
-                .setName(name)
-                .setAchieved(isAchieved)
-                .setActive(isActive)
-                .setIdGoalOwner(team.getId())
-                .setPersonalGoal(true)
-                .setRewardCredits(rewardCredits)
-                .setRewardTeamPoints(rewardTeamPoints)
-                .setAmountGoalTeamPoints(targetAmountGoalPoints)
-                .setTeamMembersGoals(this.teamMemberGoals)
+        Integer earnedPoints = 0;
+        Integer completedGoals = 0;
+        Integer amountOfPointsToAchieveGoal = 0;
+        List<GoalRSDTO> individualGoalList = new ArrayList<>();
+        for (Goal teamMemberGoal : this.teamMemberGoals) {
+            if (teamMemberGoal.status.isCompleted()) {
+                earnedPoints += teamMemberGoal.rewardTeamPoints;
+                completedGoals++;
+            }
+            individualGoalList.add(teamMemberGoal.toDTO());
+            amountOfPointsToAchieveGoal += teamMemberGoal.rewardTeamPoints;
+        }
+
+        return GoalRSDTO.builder()
+                .id(id)
+                .name(name)
+                .description(description)
+                .deadline(deadline)
+                .status(status)
+                .idGoalOwner(team.getId())
+                .teamName(team.getName())
+                .earnedPoints(earnedPoints)
+                .isPersonalGoal(false)
+                .rewardCredits(rewardCredits)
+                .rewardTeamPoints(rewardTeamPoints)
+                .teamMembersGoals(individualGoalList)
+                .amountOfPointsToAchieveGoal(amountOfPointsToAchieveGoal)
+                .completedGoals(completedGoals)
                 .build();
     }
 

@@ -1,6 +1,4 @@
-package io.meritu.meritubackend.domain.entity;
-
-import jakarta.validation.constraints.NotEmpty;
+package io.meritu.meritubackend.domain.entity.enums;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;

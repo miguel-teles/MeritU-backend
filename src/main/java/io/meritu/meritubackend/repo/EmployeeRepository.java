@@ -13,7 +13,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     List<Employee> findAllWithGoals();
 
     @Query("SELECT e FROM Employee e " +
-            "LEFT JOIN e.individualGoals g WITH g.isAchieved = true " +
+            "LEFT JOIN e.individualGoals g WITH g.statusValue = 2 " + //COMPLETED
             "GROUP BY e.id " +
             "ORDER BY COUNT(g) DESC LIMIT :limit")
     List<Employee> findTopByCompletedGoals(Integer limit);

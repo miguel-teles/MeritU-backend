@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,14 +18,18 @@ public class TeamGoalRQDTO extends GoalRQDTO {
     public TeamGoalRQDTO(Integer targetAmountGoalPoints,
                          Integer rewardTeamPoints,
                          String name,
+                         String description,
                          Integer rewardCredits,
                          Long goalOwnerId,
-                         Long teamGoalId) {
+                         Long teamGoalId,
+                         LocalDateTime deadline) {
         this.targetAmountGoalPoints = targetAmountGoalPoints;
         this.rewardTeamPoints = rewardTeamPoints;
         this.name = name;
+        this.description = description;
         this.rewardCredits = rewardCredits;
         this.goalOwnerId = goalOwnerId;
         this.teamGoalId = teamGoalId;
+        this.deadline = deadline;
     }
 }

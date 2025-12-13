@@ -2,6 +2,7 @@ package io.meritu.meritubackend.domain.entity;
 
 import io.meritu.meritubackend.domain.dto.EmployeeRQDTO;
 import io.meritu.meritubackend.domain.dto.EmployeeRSDTO;
+import io.meritu.meritubackend.domain.entity.enums.Role;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.hibernate.Hibernate;
@@ -63,9 +64,9 @@ public class Employee {
         Integer activeGoals = 0;
         if (Hibernate.isInitialized(individualGoals)) {
             for (IndividualGoal individualGoal : individualGoals) {
-                if (individualGoal.isAchieved) {
+                if (individualGoal.status.isCompleted()) {
                     completedGoals++;
-                } else {
+                } else if (individualGoal.status.isActive()) {
                     activeGoals++;
                 }
             }

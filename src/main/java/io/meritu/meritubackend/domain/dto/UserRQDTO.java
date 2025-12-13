@@ -1,6 +1,5 @@
 package io.meritu.meritubackend.domain.dto;
 
-import io.meritu.meritubackend.domain.entity.Role;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

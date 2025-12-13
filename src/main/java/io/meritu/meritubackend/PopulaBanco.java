@@ -3,14 +3,16 @@ package io.meritu.meritubackend;
 import io.meritu.meritubackend.domain.dto.IndividualGoalRQDTO;
 import io.meritu.meritubackend.domain.dto.TeamGoalRQDTO;
 import io.meritu.meritubackend.domain.entity.*;
+import io.meritu.meritubackend.domain.entity.enums.Role;
+import io.meritu.meritubackend.domain.entity.enums.UserRole;
 import io.meritu.meritubackend.repo.*;
 import io.meritu.meritubackend.service.goal.GoalOperationService;
-import io.meritu.meritubackend.service.goal.impl.IndividualGoalService;
 import jakarta.annotation.PostConstruct;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Random;
 
 @Component
 public class PopulaBanco {
@@ -78,7 +80,23 @@ public class PopulaBanco {
         contaJoao.getEmployee().setTeam(team);
         employeeRepository.save(contaJoao.getEmployee());
 
-        TeamGoal teamGoal = new TeamGoal(new TeamGoalRQDTO(20, 10, "Team goal", 10, team.getId(), null));
+        createGoalsAndCompleteSome(team, miguel, joao, maria);
+        createGoalsAndCompleteSome(team, miguel, joao, maria);
+        createGoalsAndCompleteSome(team, miguel, joao, maria);
+    }
+
+    private void createGoalsAndCompleteSome(Team team,
+                                            Employee miguel,
+                                            Employee joao,
+                                            Employee maria) {
+        TeamGoal teamGoal = new TeamGoal(new TeamGoalRQDTO(20,
+                null,
+                "Team goal",
+                "Meta de time muito importante e legal. Relacionada aquela tarefa também importante.",
+                10,
+                team.getId(),
+                null,
+                LocalDateTime.of(2025, 12, 30, 11, 0)));
         teamGoalRepository.save(teamGoal);
 
         IndividualGoal individualGoal1 = adicionaIndividualGoalUsuario(miguel.getId(), teamGoal.getId());
@@ -97,9 +115,20 @@ public class PopulaBanco {
     //TODO: TIRAR O H2 E CRIAR UM BANCO NO DOCKER MESMO, FODA-SE!!!!
 
     private IndividualGoal adicionaIndividualGoalUsuario(long goalOwnerId, long teamGoalId) {
-        IndividualGoal individualGoal = new IndividualGoal(new IndividualGoalRQDTO(20, teamGoalId, "Individual goal", 10, goalOwnerId));
+        IndividualGoal individualGoal = new IndividualGoal(new IndividualGoalRQDTO(randomDecimal(),
+                teamGoalId,
+                "Individual goal",
+                "Descrição da goal individual muito legal. É preciso terminá-la até a deadline.",
+                10,
+                goalOwnerId,
+                LocalDateTime.of(2026, 2, 1, 15, 30)));
         individualGoalRepository.save(individualGoal);
         return individualGoal;
+    }
+
+    int randomDecimal() {
+        Random r = new Random();
+        return (r.nextInt((int)((99-10)*10+1))+10*10) / 10;
     }
 
 }

@@ -37,7 +37,7 @@ public class TeamGoalOperationServiceImpl implements GoalOperationService {
     @Transactional
     public Goal completeGoal(Long id) {
         TeamGoal goal = (TeamGoal) goalService.findById(id).orElseThrow(() -> new GoalNotFoundException(id));
-        if (goal.isAchieved()) {
+        if (goal.getStatus().isCompleted()) {
             throw new InvalidOperationGoalException("Goal already completed!");
         }
         goal.complete();

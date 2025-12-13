@@ -3,6 +3,8 @@ package io.meritu.meritubackend;
 import io.meritu.meritubackend.domain.dto.IndividualGoalRQDTO;
 import io.meritu.meritubackend.domain.dto.TeamGoalRQDTO;
 import io.meritu.meritubackend.domain.entity.*;
+import io.meritu.meritubackend.domain.entity.enums.Role;
+import io.meritu.meritubackend.domain.entity.enums.UserRole;
 import io.meritu.meritubackend.exception.GoalNotFoundException;
 import io.meritu.meritubackend.exception.InvalidOperationGoalException;
 import io.meritu.meritubackend.service.employee.EmployeeService;
@@ -10,13 +12,13 @@ import io.meritu.meritubackend.service.goal.GoalOperationService;
 import io.meritu.meritubackend.service.goal.GoalService;
 import io.meritu.meritubackend.service.goal.impl.IndividualGoalOperationService;
 import io.meritu.meritubackend.service.goal.impl.GoalAsyncOperationHelper;
-import io.meritu.meritubackend.service.user.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,12 +65,14 @@ public class IndividualGoalOperationServiceTest {
     }
 
     private static IndividualGoal montaIndividualGoal() {
-        TeamGoal teamGoal = new TeamGoal(new TeamGoalRQDTO(20, 20, "team teste", 10, 1l, 1l));
+        TeamGoal teamGoal = new TeamGoal(new TeamGoalRQDTO(20, 20, "team teste", "description", 10, 1l, 1l, LocalDateTime.of(2027, 5, 10, 10, 0)));
         IndividualGoal individualGoal = new IndividualGoal(new IndividualGoalRQDTO(10,
                 1l,
                 "individual teste",
+                "Description",
                 10,
-                1l));
+                1l,
+                LocalDateTime.of(2027, 5, 10, 10, 0)));
         individualGoal.setTeamGoal(teamGoal);
         teamGoal.setTeamMemberGoals(List.of(individualGoal));
         return individualGoal;
@@ -82,7 +86,7 @@ public class IndividualGoalOperationServiceTest {
     }
 
     private void mockUser() {
-        user = new User("teste", "teste", UserRole.COMMON, new Employee("a", "a", true, Role.EMPLOYEE));
+        user = new User("teste", "teste", UserRole.COMMON, new Employee("a", "a", "a",  true, Role.EMPLOYEE));
         when(employeeService.findById(1l)).thenReturn(Optional.of(user.getEmployee()));
     }
 
@@ -90,7 +94,7 @@ public class IndividualGoalOperationServiceTest {
     void completeGoalTest() {
         IndividualGoal goal = (IndividualGoal) service.completeGoal(1l);
 
-        Assertions.assertTrue(goal.isAchieved());
+        Assertions.assertTrue(goal.getStatus().isCompleted());
         Assertions.assertNotNull(user.getEmployee().getBalance());
         Assertions.assertTrue(user.getEmployee().getBalance() > 0);
         verify(goalAsyncOperationHelper).completeTeamGoalIfPointsReached(goal.getTeamGoal());

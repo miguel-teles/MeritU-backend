@@ -1,4 +1,4 @@
-package io.meritu.meritubackend.domain.entity;
+package io.meritu.meritubackend.domain.entity.enums;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -20,7 +20,7 @@ public enum UserRole {
                 return role;
             }
         }
-        throw new IllegalArgumentException("UserRole '" + roleName + "' doesn't exist. Allowed values: " + Arrays.stream(io.meritu.meritubackend.domain.entity.Role.values()).map(r -> r.name()).collect(Collectors.joining(", ")));
+        throw new IllegalArgumentException("UserRole '" + roleName + "' doesn't exist. Allowed values: " + Arrays.stream(Role.values()).map(r -> r.name()).collect(Collectors.joining(", ")));
     }
 
     public int getValue() {
@@ -33,6 +33,6 @@ public enum UserRole {
                 return role;
             }
         }
-        throw new IllegalArgumentException("Role with value '" + value + "' doesn't exist. Allowed values: " + Arrays.stream(io.meritu.meritubackend.domain.entity.Role.values()).map(r -> r.name() + " (" + r.getValue() + ")").collect(Collectors.joining(", ")));
+        throw new IllegalArgumentException("Role with value '" + value + "' doesn't exist. Allowed values: " + Arrays.stream(Role.values()).map(r -> r.name() + " (" + r.getValue() + ")").collect(Collectors.joining(", ")));
     }
 }

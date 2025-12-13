@@ -1,6 +1,7 @@
 package io.meritu.meritubackend.domain.entity;
 
 import io.meritu.meritubackend.domain.dto.UserRSDTO;
+import io.meritu.meritubackend.domain.entity.enums.UserRole;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

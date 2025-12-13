@@ -35,15 +35,9 @@ public class GoalAsyncOperationHelper {
     }
 
     private static boolean wasTeamGoalPointsReached(TeamGoal goal) {
-        Integer pointsReached = 0;
-        for (Goal teamMemberGoals : goal.getTeamMemberGoals()) {
-            IndividualGoal individualGoal = (IndividualGoal) teamMemberGoals;
-            if (individualGoal.isAchieved()) {
-                pointsReached += individualGoal.getRewardTeamPoints();
-            }
-        }
-        Integer amountGoalPoints = goal.getTargetAmountGoalPoints();
-
-        return amountGoalPoints >= pointsReached;
+        return goal
+                .getTeamMemberGoals()
+                .stream()
+                .allMatch(tg->tg.getStatus().isCompleted());
     }
 }
