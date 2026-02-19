@@ -1,4 +1,4 @@
-package io.meritu.meritubackend.controller;
+package io.meritu.meritubackend.controller.handler;
 
 import io.meritu.meritubackend.domain.dto.ErrorFieldDTO;
 import io.meritu.meritubackend.domain.dto.ErrorResponseDTO;
