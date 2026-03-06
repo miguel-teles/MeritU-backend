@@ -1,6 +1,7 @@
 package io.meritu.meritubackend.controller;
 
 import io.meritu.meritubackend.config.annotation.TeamGoalOperation;
+import io.meritu.meritubackend.controller.mapping.GoalToTeamGoalDTOMapper;
 import io.meritu.meritubackend.domain.dto.GoalRSDTO;
 import io.meritu.meritubackend.domain.dto.TeamGoalRQDTO;
 import io.meritu.meritubackend.domain.entity.Goal;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,17 +25,20 @@ import java.util.List;
 public class TeamGoalController {
     private final GoalService goalService;
     private final GoalOperationService goalOperationService;
+    private final GoalToTeamGoalDTOMapper goalToTeamGoalDTOMapper;
 
     public TeamGoalController(@io.meritu.meritubackend.config.annotation.TeamGoal GoalService goalService,
-                              @TeamGoalOperation GoalOperationService goalOperationService) {
+                              @TeamGoalOperation GoalOperationService goalOperationService,
+                              GoalToTeamGoalDTOMapper goalToTeamGoalDTOMapper) {
         this.goalService = goalService;
         this.goalOperationService = goalOperationService;
+        this.goalToTeamGoalDTOMapper = goalToTeamGoalDTOMapper;
     }
 
     @GetMapping
     @Operation(summary = "Get all team goals")
     public ResponseEntity<List<GoalRSDTO>> getAll() {
-        return ResponseEntity.ok(goalService.findAll().stream().map(Goal::toDTO).toList());
+        return ResponseEntity.ok(goalToTeamGoalDTOMapper.toTeamGoalListGetAll(goalService.findAll()));
     }
 
     @GetMapping("/{id}")
